@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            background-color: #444;
+            padding: 0.5rem;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: background 0.3s;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        .container {
+            padding: 2rem;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .gallery img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .upload-form {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background-color: #333;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Memory Portfolio</h1>
+        <p>A collection of my favorite pictures and videos</p>
+    </header>
+
+    <nav>
+        <a href="#photos">Photos</a>
+        <a href="#upload">Upload</a>
+    </nav>
+
+    <div class="container">
+        <section id="upload">
+            <h2>Upload Photos</h2>
+            <div class="upload-form">
+                <form id="uploadForm">
+                    <input type="file" id="fileInput" accept="image/*" multiple>
+                    <button type="button" onclick="uploadFiles()">Upload</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="photos">
+            <h2>Photos</h2>
+            <div class="gallery" id="photoGallery">
+                <!-- Uploaded photos will appear here -->
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 My Portfolio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function uploadFiles() {
+            const fileInput = document.getElementById('fileInput');
+            const photoGallery = document.getElementById('photoGallery');
+
+            if (fileInput.files.length > 0) {
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    const file = fileInput.files[i];
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.alt = `Uploaded photo ${i + 1}`;
+                        photoGallery.appendChild(img);
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+
+                fileInput.value = ''; // Clear the input
+            } else {
+                alert('Please select a file to upload.');
+            }
+        }
+    </script>
+</body>
+</html>
